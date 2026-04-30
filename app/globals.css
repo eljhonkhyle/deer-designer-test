@@ -1,26 +1,293 @@
 @import "tailwindcss";
 
+/* ── Design Tokens ────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gold: #c9a84c;
+  --gold-light: #e2c97e;
+  --gold-dark: #9e7a28;
+  --dark: #1a1612;
+  --dark-2: #231f1a;
+  --dark-3: #2e2820;
+  --cream: #f5f0e8;
+  --cream-2: #ede7d9;
+  --text-light: #d4c9b0;
+  --text-muted: #8a7d6a;
+  --text-body: #5a4f3e;
+
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+
+  /* Spacing scale */
+  --section-y: clamp(4rem, 8vw, 7rem);
+  --container-x: clamp(2rem, 7vw, 5rem);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-dark: var(--dark);
+  --color-dark-2: var(--dark-2);
+  --color-dark-3: var(--dark-3);
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Reset ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* height of fixed navbar */
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--dark);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+svg {
+  max-width: 100%;
+}
+
+/* ── Typography Utilities ─────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.display-1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  /* was clamp(3rem, 7vw, 5.5rem) */
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.overline {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.body-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+/* ── Layout ───────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-x);
+  padding-right: var(--container-x);
+}
+
+.section-pad {
+  padding-top: var(--section-y);
+  padding-bottom: var(--section-y);
+}
+
+/* ── Components ───────────────────────────────────── */
+
+/* Gold horizontal rule */
+.gold-divider {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* Section label row: ─── LABEL ─── */
+.section-label {
+  display: inline-flex;
+  /* revert back to inline-flex */
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::before,
+.section-label::after {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Primary button — gold filled */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color: var(--dark);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+  filter: brightness(1.08);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* Secondary button — gold outlined */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.825rem 2rem;
+  background: transparent;
+  color: var(--gold);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--gold);
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--gold);
+  color: var(--dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.3);
+}
+
+.btn-outline:active {
+  transform: translateY(0);
+}
+
+/* Legacy alias — keep for any component still using .gold-btn */
+
+
+/* Form inputs */
+.form-input {
+  width: 100%;
+  background: var(--dark-2);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 0.5rem;
+  color: var(--text-light);
+  padding: 0.85rem 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 300;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:focus {
+  border-color: rgba(201, 168, 76, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08);
+}
+
+/* ── Animations ───────────────────────────────────── */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+/* ── Mobile safety ────────────────────────────────── */
+@media (max-width: 640px) {
+  .section-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .display-1 {
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    /* was clamp(2.5rem, 10vw, 3.5rem) */
+  }
 }
