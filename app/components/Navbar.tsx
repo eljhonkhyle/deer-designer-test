@@ -68,9 +68,11 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop CTA */}
-          <a href="#contact" className="btn-gold hidden lg:inline-flex text-[0.68rem] py-3 px-6">
-            Free Consultation
-          </a>
+          <div className="hidden lg:block shrink-0">
+            <a href="#contact" className="btn-gold text-[0.68rem] py-3 px-6">
+              Free Consultation
+            </a>
+          </div>
 
           {/* Hamburger — animated to X */}
           <button
